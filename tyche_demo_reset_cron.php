@@ -25,6 +25,11 @@
 		'booking_order_history',
 		'posts',
 		'postmeta',
+        'woocommerce_bundled_itemmeta',
+		'woocommerce_bundled_items',
+		'wc_order_product_lookup',
+		'wc_product_attributes_lookup',
+		'wc_product_meta_lookup',
 	);
 
 	foreach ( $drop_tables as $table ) {
@@ -34,7 +39,7 @@
 
 	$restore_file = $file_path . '/tychesod_wp611.sql';
 	$lines        = file( $restore_file );
-
+	$templine     = '';
 	foreach ( $lines as $line ) {
 
 		if ( substr( $line, 0, 2 ) == '--' || $line == '' ) // Skip it if it's a comment.
@@ -49,8 +54,10 @@
 	}
 
 	$global_settings = get_option( 'woocommerce_booking_global_settings_backup' );
-	update_option( 'woocommerce_booking_global_settings', $global_settings );
+	if ( $global_settings ) {
+		update_option( 'woocommerce_booking_global_settings', $global_settings );
+	}
 
 	echo ' Reset Successfully..!!';
-	wp_mail('dhruvin@tychesoftwares.com','Demo Site Reset', 'Demo site got reset at ' . date( 'Y-m-d h:i:sa' ) );
+	wp_mail('kartik@tychesoftwares.com','Demo Site Reset', 'Demo site got reset at ' . date( 'Y-m-d h:i:sa' ) );
 //}
